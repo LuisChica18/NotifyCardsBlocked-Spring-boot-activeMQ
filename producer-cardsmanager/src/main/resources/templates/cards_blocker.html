@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script src="https://use.fontawesome.com/5b5fa05dbf.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="jumbotron">
+            <h1 style="text-align: center;">Cards Blocker</h1>
+        </div>
+        <!-- -->
+        <div class="card-block table-responsive">
+            <table class="table table-striped table-bordered table-hover" cellspacing="0" width="25%">
+                <thead>
+                <tr>
+                    <td>Card Holder Name</td>
+                    <td>Card Number</td>
+                    <td>Expiry Date</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-th-each="cardBlock : ${cardBlockList}" th:object="${cardBlock}">
+                    <td data-th-text="*{cardHolderName}"></td>
+                    <td data-th-text="*{card}"></td>
+                    <td data-th-text="*{expiryDate}"></td>
+
+                    <someHtmlTag th:if="*{blocked}">
+                        <td data-th-text="Blocked" style="color:#d70000;"></td>
+                    </someHtmlTag>
+                    <someHtmlTag th:if="!*{blocked}">
+                        <td data-th-text="Active"  style="color:#0dda0a;"></td>
+                    </someHtmlTag>
+
+                    <td class="text-center">
+                        <someHtmlTag th:if="!*{blocked}">
+                            <div class="btn-group" role="group">
+                                <form method="post" th:action="@{/block}">
+                                    <input type="hidden" th:value="*{card}" name="cardNumberSelect"/>
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </someHtmlTag>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- -->
+    </div>
+</div>
+</body>
